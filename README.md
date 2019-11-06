@@ -15,9 +15,13 @@ l’impact du réchauffement climatique sur le milieu marin. Ces
 documents sont générés automatiquement et utilisent les informations
 scientifiques mises à disposition par différents portails de diffusion
 de données scientifiques marines ([Emodnet](http://www.emodnet.eu) et
-[Copernicus](www.copernicus.eu) essentiellement). La génération
+[Copernicus](http://www.copernicus.eu) essentiellement). La génération
 automatique des documents permet de cibler une zone géographique d’étude
 et de présenter les informations disponibles sur le secteur choisi.
+
+*eoClim* sera présenté à l’[Oceanhack
+Copernicus](http://garage48.org/events/copernicus-oceanhack) les 22,23
+et 24 novembre 2019.
 
 ## Usage
 
