@@ -28,6 +28,13 @@ et 24 novembre 2019.
 Les documents en Rmarkdown sont générés sous différents formats (docx,
 pdf, html). L’outil finalisé prendra la forme d’une librairie R.
 
+## Exemple
+
+Les supports des séquences sont en cours d’élaboration. Les drafts
+disponibles sont :
+
+  - [Séquence 01: la terre est bleue](/code/01_la_terre_est_bleue.pdf)
+
 ## Installation
 
 En cours…
