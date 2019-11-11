@@ -1,0 +1,164 @@
+---
+title: "Océan et climat : séance 2 'Les activités en mer'"
+author: "Julie Faucher & Laurent Dubroca"
+date: "`r date()`"
+bibliography: '/home/moi/datahome/work/biblio/enfin/biblioloran.bib'
+---
+
+```{r, include = FALSE,eval=FALSE}
+rmarkdown::render("02_les_activités_en_mer.Rmd",output_file="02_les_activités_en_mer.pdf")
+```
+
+
+```{r global_options, include=T,cache=F,echo=F,warning=F,message=F,progress=F,verbose=F,results="hide"}
+#knitr option
+operationnel<-TRUE
+knitr::opts_chunk$set(echo=FALSE, 
+		      warning=!operationnel, 
+		      message=!operationnel,
+		      fig.height=8,
+		      progress=!operationnel,
+		      verbose=!operationnel,
+		      include=TRUE,dev='png',autodep=FALSE)
+#package
+library(COSTcore);library(COSTdbe);library(COSTeda)
+library(dplyr);library(tidyr);library(stringr)
+library(ggplot2);library(gridExtra)
+library(sf)
+##library(openxlsx);library(mailR)
+library(pander);library(captioner)
+library(mapdata)
+library(DATRAS)
+library(sparkTable)
+library(cardidates)
+library(lubridate)
+library(ggmap)
+library(osmdata)
+library(ggspatial)
+#local fct
+#source("credo_fct.R")
+#initialise les fonctions pour légender tables et figures
+tabcap <- captioner(prefix = "Table")
+figcap <- captioner(prefix = "Figure")
+
+#`r tabcap(name="info",caption="Stock id: area, species, catches.")`
+#```{r,cache=T,eval=!param[1,2],echo=FALSE,results="asis"}
+#cat("Empty section with no plot means no data.")
+#```
+#```{r tsplot1caption,cache=T,eval=tabtest[1,2],echo=FALSE,results="asis"}
+#cat(figcap(name="tsarea",caption="Landings by ICES divsion."))
+#```
+
+```
+
+**DRAFT/FRENCH/PRIMARY SCHOOL/SECOND GRADE**
+
+TO DO :
+
+- EMODNET human activity : english legend to french
+
+# Objectifs 
+
+Objectifs :
+
+- la mer est un milieu anthropisé : l'homme y exerce de nombreuses activités
+- les activités sont nombreuses et variés
+- aborder la notion de service écosystémique (TO DO)
+
+
+Déroulement :
+
+- présentation du document (légende, échelle)
+- observation
+- questions guidées :
+  - carte 1
+  	- situer la carte
+  	- siter l'école (le point rouge), les villes principales (confronter avec une
+    carte terrestre TO DO)
+  - carte 2
+    	- lister les activités humaines possibles en mer et bord de mer:
+	  vacances, pêche, port, extraction de granulat... (illustration photo à
+	  ajouter TO DO)
+	- les représenter sur la carte 
+  - carte 3
+    	- suivi des bateaux en mer : positionnement par AIS (à introduire... TO
+	  DO), et représentation en mer
+
+# Document
+
+Les documents sont générés automatiquement à partir de la définition de la zone
+géographique d'intérêt (à modifier en fonction du contexte géographique de
+l'intervention).
+
+Exemple centré sur la baie de Seine :
+
+```{r defzone,echo=T}
+zone <- c(left = -1.5, bottom = 49.17, right = 0.5, top = 49.8)
+ecole<-data.frame(x=-0.760708,y=49.190930)
+#collect data
+#terre vs mer
+fond<-get_stamenmap(zone,maptype="terrain-background",zoom=9)
+#human activities
+if(file.exists("ha.rdata")){
+	   load("ha.rdata")
+    }else{
+	ha<-REMODnet::gethumactpointall(-1.5,0.5,49.17,49.8)
+    }
+#shipping intensity
+if(file.exists("ais.rdata")){
+	load("ais.rdata")
+}else{
+con<-c("https://ows.emodnet-humanactivities.eu/wcs?service=wcs&version=1.0.0&request=getcoverage&coverage=emodnet:2017_01_st_All&crs=EPSG:4326&BBOX=-1.5,49.17,0.5,49.8&format=image/tiff&interpolation=nearest&resx=0.00833333&resy=0.00833333")
+utils::download.file(con, "img.tiff", quiet = TRUE, mode = "wb")
+ais <- raster::raster("img.tiff")
+save(ais,file="ais.rdata")
+}
+
+```
+
+## Carte 1
+
+```{r seamap,echo=T,eval=T}
+	#fond<-get_stamenmap(zone,maptype="toner",zoom=9)
+	mapsea<-ggmap(fond)+
+		xlab("Longitude")+ylab("Latitude")+
+		ggtitle("La baie de Seine")+
+		geom_point(data=ecole,aes(x=x,y=y),color="red")
+	print(mapsea)
+```
+
+## Activité humaines maritimes
+
+### Illustrations activités
+
+### Carte 2
+
+```{r seamapha,echo=T,eval=T}
+
+	#fond<-get_stamenmap(zone,maptype="toner",zoom=9)
+	mapsea2<-ggmap(fond)+
+		xlab("Longitude")+ylab("Latitude")+
+		ggtitle("La baie de Seine")+
+		geom_point(data=ecole,aes(x=x,y=y),color="red")+
+		geom_point(data=ha,aes(x=x,y=y,color=type))
+	print(mapsea2)
+```
+
+### Carte 3
+
+Densité des positions de navires en 2017 (toutes activités confondues)
+
+```{r seamapais,echo=T,eval=T}
+	#fond<-get_stamenmap(zone,maptype="toner",zoom=9)
+	#mapsea2<-ggmap(fond)+
+	#	xlab("Longitude")+ylab("Latitude")+
+	#	ggtitle("La baie de Seine")+
+	#	geom_point(data=ecole,aes(x=x,y=y),color="red")+
+	#	geom_point(data=ha,aes(x=x,y=y,color=type))
+	#print(mapsea2)
+	gplot(ais)+geom_tile(aes(fill=value))+
+		scale_fill_gradient(low = 'white', high = 'blue') +
+	          coord_equal()
+	  ais[ais==0]<-NA
+	  levelplot(ais,margin=FALSE,zscaleLog=TRUE)
+```

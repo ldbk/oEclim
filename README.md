@@ -30,10 +30,14 @@ pdf, html). L’outil finalisé prendra la forme d’une librairie R.
 
 ## Exemple
 
-Les supports des séquences sont en cours d’élaboration. Les drafts
-disponibles sont :
+Les supports des séquences sont en cours d’élaboration. Les documents
+PDF actuels montrent une partie du code R ayant permis de générer les
+documents. Le fichier Rmd associé contient l’ensemble du code. Les
+drafts disponibles sont :
 
   - [Séquence 01: la terre est bleue](/code/01_la_terre_est_bleue.pdf)
+  - [Séquence 02: les activités en
+    mer](/code/01_les_activités_en_mer.html)
 
 ## Installation
 
