@@ -33,11 +33,16 @@ pdf, html). L’outil finalisé prendra la forme d’une librairie R.
 Les supports des séquences sont en cours d’élaboration. Les documents
 PDF actuels montrent une partie du code R ayant permis de générer les
 documents. Le fichier Rmd associé contient l’ensemble du code. Les
-drafts disponibles sont :
+séquences suivantes sont à l’état de brouillon (pour visionner les
+séquences au format html, il faut les télécharger sur son poste pour le
+moment) :
 
   - [Séquence 01: la terre est bleue](/code/01_la_terre_est_bleue.pdf)
   - [Séquence 02: les activités en
-    mer](/code/02_les_activités_en_mer.html)
+    mer](/code/02_les_activités_en_mer.pdf)
+  - [Séquence 03: la température de
+    l’eau](/code/03_la_température_de_l_eau.pdf)
+  - …
 
 ## Installation
 

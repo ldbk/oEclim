@@ -150,6 +150,7 @@ save(ais,file="ais.rdata")
 Densité des positions de navires en 2017 (toutes activités confondues)
 
 ```{r seamapais,echo=T,eval=T}
+library(rasterVis)
 	#fond<-get_stamenmap(zone,maptype="toner",zoom=9)
 	#mapsea2<-ggmap(fond)+
 	#	xlab("Longitude")+ylab("Latitude")+
