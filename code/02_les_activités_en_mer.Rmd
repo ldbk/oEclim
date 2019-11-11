@@ -2,11 +2,12 @@
 title: "Océan et climat : séance 2 'Les activités en mer'"
 author: "Julie Faucher & Laurent Dubroca"
 date: "`r date()`"
+output: pdf_document
 bibliography: '/home/moi/datahome/work/biblio/enfin/biblioloran.bib'
 ---
 
 ```{r, include = FALSE,eval=FALSE}
-rmarkdown::render("02_les_activités_en_mer.Rmd",output_file="02_les_activités_en_mer.pdf")
+rmarkdown::render("02_les_activités_en_mer.Rmd")#,output_file="02_les_activités_en_mer.pdf")
 ```
 
 
@@ -19,7 +20,7 @@ knitr::opts_chunk$set(echo=FALSE,
 		      fig.height=8,
 		      progress=!operationnel,
 		      verbose=!operationnel,
-		      include=TRUE,dev='png',autodep=FALSE)
+		      include=TRUE,dev='png',autodep=FALSE,fig.retina = 1)
 #package
 library(COSTcore);library(COSTdbe);library(COSTeda)
 library(dplyr);library(tidyr);library(stringr)
@@ -156,9 +157,9 @@ Densité des positions de navires en 2017 (toutes activités confondues)
 	#	geom_point(data=ecole,aes(x=x,y=y),color="red")+
 	#	geom_point(data=ha,aes(x=x,y=y,color=type))
 	#print(mapsea2)
-	gplot(ais)+geom_tile(aes(fill=value))+
-		scale_fill_gradient(low = 'white', high = 'blue') +
-	          coord_equal()
+	#gplot(ais)+geom_tile(aes(fill=value))+
+	#	scale_fill_gradient(low = 'white', high = 'blue') +
+	#          coord_equal()
 	  ais[ais==0]<-NA
 	  levelplot(ais,margin=FALSE,zscaleLog=TRUE)
 ```
