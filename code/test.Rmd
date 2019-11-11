@@ -1,5 +1,5 @@
 ---
-title: "Réchauffement cycle 2 test"
+title: "Réchauffement cycle 2 : document de test"
 author: "Julie Faucher & Laurent Dubroca"
 date: "`r date()`"
 bibliography: '/home/moi/datahome/work/biblio/enfin/biblioloran.bib'
@@ -28,6 +28,9 @@ library(DATRAS)
 library(sparkTable)
 library(cardidates)
 library(lubridate)
+library(ggmap)
+library(osmdata)
+library(ggspatial)
 #local fct
 #source("credo_fct.R")
 #initialise les fonctions pour légender tables et figures
@@ -41,13 +44,109 @@ figcap <- captioner(prefix = "Figure")
 #```{r tsplot1caption,cache=T,eval=tabtest[1,2],echo=FALSE,results="asis"}
 #cat(figcap(name="tsarea",caption="Landings by ICES divsion."))
 #```
+#param
+zone <- c(left = -2, bottom = 49, right = 2, top = 51)
+
 ```
+
 
 # Introduction 
 
-Un test 
+Un test: document généré partiellement ne automatique 
+Utilisation des données 
+
+#sst 1982-2014 0.04
+serviceid<-"SST_NWS_SST_L4_REP_OBSERVATIONS_010_023-TDS"
+productid<-"IFREMER-NWS-SST-L4-REP-OBS_FULL_TIME_SERIE"
+gégraphie de la Manche
+
+# La mer : d'une surface plane à une milieu anthropisé
+
+## Séance
+
+carte orienté terre versus human activity from Emodnet + données de traffic
+maritime (toujours emodnet)
+
+## La terre ou la mer ?
+
+Mettre en évidence que les terres émergées occupent 30 % de la surface de la
+terre.
+
+## Activité
+
+Géographie...
+
+## Une surface plane ?
+
+```{r basemap}
+#plot a country
+
+#find the bbox of a country
+bboxcountry<-osmdata::getbb("France")
+zonecountry<-osmdata::getbb("France")
+
+zone <- c(left = -1.5, bottom = 49.2, right = 0.5, top = 49.8)
+zoneworld<-c(-180,-80,180,85)
+fondworld<-get_stamenmap(zoneworld,maptype="terrain-background",zoom=1)
+pipo<-data.frame(x=0,y=50)
+ggmap(fondworld)+xlab("Longitude")+ylab("Latitude")
+annotation_scale(location = "bl", width_hint = 0.5) 
+	    annotation_north_arrow(location = "bl", which_north = "true", 
+				           pad_x = unit(0.75, "in"), pad_y =
+						   unit(0.5, "in"),
+					           style =
+							   north_arrow_fancy_orienteering)
++
+
+#zone <- c(left = -1, bottom = 49.3, right = -0.5, top = 49.4)
+if(!file.exists("fond.rdata")){
+	fond<-get_stamenmap(zone,maptype="terrain-background",zoom=9)
+	fond<-get_stamenmap(zone,maptype="toner",zoom=9)
+	fond<-get_stamenmap(zone,maptype=c("terrain-lines"),zoom=9,messaging=FALSE,color="color",force=T)
+	print(ggmap(fond))
+
+	save(fond,file="fond.rdata")
+}else{
+	load("fond.rdata")
+}
+print(ggmap(fond))
+#ggmap(fond)+geom_point(data=data.frame(x=0,y=50),aes(x=x,y=y))
+library(REMODnet)
+ha<-gethumactpointall(-2,2,49,51)
+plot(ha$x,ha$y)
+ggmap(fond)+geom_point(data=ha,aes(x=x,y=y,color=type))
+#add ais from edmonet
+path2data<-"../../../../satellite_data/"
+testfich<-paste0("ais/2017_02_st_all.tif")
+
+
+
+
+```
+
+Mettre en évidence le vide des cartes routières.
+Puis mettre en avant les noms 
+Puis les activités
+
+## Traffic maritime
+
+perception
+
+# un milieu dynamique
+
+## La température
+
+thermomètre à distance : usage d'un satellite pour voir les choses
+utilisation d'un thermomètre infrarouge
 
 ```{r data,eval=F}
+#use local data
+path2data<-"../../../../satellite_data/chloa/"
+fichsst<-dir(path=path2data,pattern="ana",full=T)
+library(raster)
+pipo<-stack(fichsst[1],varname="analysed_sst")
+plot(pipo)
+
 #test python stuff
 library(reticulate)
 os<-import("os")
@@ -85,214 +184,3 @@ source_python("pipo.py")
 #Emodnet
 ```
 
-# Data and simulated data
-
-- data : MC
-- simulated : not found anything easy to manipulate to mimic phytoplankton time
-  series
-
-## Simulation
-
-Not really ready
-
-```{r simu time series,eval=F}
-set.seed(666)
-#test with a sin
-tps <- expand.grid(week=1:51,year=2016:2019)%>%mutate(time=year+week/52)
-sp1 <- .5+exp(sin(2*pi*tps$time)) + rnorm(tps$time, sd = 0.1)
-plot(tps$time,sp1,type="l")
-
-fct1<-function(x=1:153,maxval=20){
-	maxval*sin(2*pi*x/51)+jitter(rep(maxval,length(x)),amount=maxval)#*10/100)
-}
-plot(fct1(),type="l")
-require(gratis)
-#simulate a times series
-x<-generate_ts(n.ts=1,freq=51,nComp=3,n=51*4)
-forecast::autoplot((x$N1$x))
-x<-generate_ts_with_target(n=1,ts.length=51*4,freq=51,seasonal=TRUE)
-forecast::autoplot((x$N1$x))
-
-x<-generate_msts(seasonal.period=365,n=1200)#n.ts=2,freq=51,nComp=2,n=204)
-plot(x)
-
-```
-
-## Marechiara
-
-```{r mc}
-mcbio<-read.csv2("./data/MC_bio_2015.csv")%>%
-	mutate(date=fast_strptime(date,"%Y-%m-%d",lt=F))#%>%
-	#select(-X,-year,-season,-month,-week)
-mcenv<-read.csv2("./data/MC_env_2015.csv")
-pipo<-gather(mcbio,key="spp",value="abun",7:ncol(mcbio))
-listspp<-unique(pipo$spp)
-ggplot(pipo%>%filter(spp%in%listspp[1]),aes(x=date,y=abun,color=spp))+
-	geom_point()+facet_grid(year~month,scale="free_x")
-ggplot(pipo%>%filter(spp%in%listspp[1]),aes(x=date,y=abun,color=spp))+
-	geom_point()+
-	geom_line()+facet_wrap(~year,scale="free_x")
-spp1<-pipo%>%filter(spp%in%listspp[1])
-
-
-```
-
-## Cheasapeak bay
-
-```{r mc}
-chebay<-read.csv("./data/che_bay_bio.csv",sep=";",dec=",")
-dim(chebay)
-dim(distinct(chebay))
-aa<-spread(chebay%>%mutate(newspp=paste(s_name,size,spe_code))%>%
-	   select(date,station,layer,newspp,abund,ID),newspp,abund)
-
-
-
-
-```
-
-
-## Edwards' method
-
-```{r edward}
-spp1<-pipo%>%filter(spp%in%listspp[1]&year==2015)
-plot(spp1$date,spp1$abun)
-#edwards
-T=sum(spp1$week*spp1$abun)/sum(spp1$abun)
-#all species
-edwards<-function(a){sum(a$week*a$abun,na.rm=T)/sum(a$abun,na.rm=T)}
-#test on spp1
-edwards(spp1)
-#using purrr and nest
-aa<-pipo%>%group_by(spp,year)%>%tidyr::nest() %>%
-	mutate(edwards=purrr::map(data,.f=~edwards(.)))
-
-%>%
-	mutate(cdw=purrr::map(fitweibull,.f=~CDW(.))) 
-
-```
-
-## Rolinski methods
-
-Weilbull type function parameters
-
-```{r rolinski}
-#test 1 spp 1 year
-spp1<-pipo%>%filter(spp%in%listspp[1]&year==2015)
-plot(spp1$date,spp1$abun)
-rez<-fitweibull6(yday(spp1$date),spp1$abun)
-CDW(rez)
-plot(rez)
-#test 2 species 2 year
-spp2<-pipo%>%filter(spp%in%listspp[1:2]&year%in%c(2014:2015))
-ggplot(spp2,aes(x=date,y=abun,color=spp))+
-	geom_point()+
-	geom_line()+facet_wrap(~year,scale="free_x")
-#using purrr and nest
-aa<-spp2%>%group_by(spp,year)%>%tidyr::nest() %>%
-	mutate(fitweibull=purrr::map(data,.f=~fitweibull6(yday(.$date),.$abun))) %>%
-	mutate(cdw=purrr::map(fitweibull,.f=~CDW(.))) 
-possible_fitweibull6<- purrr::possibly(fitweibull6, otherwise = NA_real_)
-possible_CDW<- purrr::possibly(CDW, otherwise = NA_real_)
-
-spp2<-pipo%>%filter(spp%in%listspp[1:2])#&year%in%c(2014:2015))
-aa<-pipo%>%group_by(spp,year)%>%tidyr::nest() %>%
-	mutate(fitweibull=purrr::map(data,.f=~possible_fitweibull6(yday(.$date),.$abun))) %>%
-	mutate(cdw=purrr::map(fitweibull,.f=~possible_CDW(.))) 
-
-saveRDS(aa,file="rezfitwei.RDS")
-fct1<-function(a){data.frame(tMid=a$x[1],tBegin=a$x[2],tEnd=a$x[3])}
-possible_fct1<-purrr::possibly(fct1,otherwise=data.frame(tMid=NA,tBegin=NA,tEnd=NA))
-possible_fct1("oahdoah")
-aa1<-aa%>%mutate(rez=purrr::map(cdw,.f=~possible_fct1(.)))
-aa2<-aa1%>%tidyr::unnest(rez)
-
-```
-
-
-```{r spline}
-spp1<-pipo%>%filter(spp%in%listspp[1]&year==2015)
-plot(yday(spp1$date),spp1$abun)
-lines(smooth.spline(yday(spp1$date),spp1$abun,spar=.4))
-lines(smooth.spline(yday(spp1$date),spp1$abun,df=10),col="green")
-#predict with deriv=1 should work
-
-```
-
-# Time series caracterization
-
-
-```{r tsfeatures}
-require(tsfeatures)
-spp1<-pipo%>%filter(spp%in%listspp[2]&year>=1996)
-tsspp1<-ts(spp1$abun,freq=51,start=c(min(spp1$year),1))
-plot(tsspp1)
-tsfeatures(spp1$abun)
-	tsfeatures(tsspp1)%>%View()
-
-```
-
-```{r timeseries}
-#periodicity bfast
-library(bfast)
-spp1<-pipo%>%filter(spp%in%listspp[2]&year>=1996)
-tsspp1<-ts(spp1$abun,freq=51,start=c(min(spp1$year),1))
-plot(tsspp1)
-aa<-bfast(tsspp1,h=.05,season="harmonic",max.iter=3)#,hpc="foreach")
-plot(aa)
-
-
-
-# create two sin-functions
-x_orig <- seq(0,1,by=1e-2)
-y_orig <- sin(10*2*pi*x_orig) + 0.1*sin(2*2*pi*x_orig)
-
-# make a 10% gap
-i <- round(length(x_orig)*0.2) : round(length(x_orig)*0.3)
-x <- x_orig
-y <- y_orig
-x[i] <- NA
-y[i] <- NA
-
-
-# calculating the lomb periodogram
-l <- spec.lomb(x = x, y = y,ofac = 20,mode = "normal")
-
-#wavelet/fft
-```
-
-```{r testtsfeatures}
-library(Rplanktonanalytic)
-library(tsfeatures)
-library(dplyr)
-library(pastecs)
-data(phytopknar)
-pipo<-phytopknar%>%pull(5)
-k<-15
-allreg<-regspline(phytopknar$date,as.matrix(phytopknar[,k]))
-plot(phytopknar$date,as.data.frame(phytopknar)[,k],type="b")
-title(names(phytopknar)[k])
-lines(allreg$x,allreg$y,col="red")
-lines(phytopknar$date,allreg$y,col="blue")
-
-nbpt<-round(length(unique(year(phytopknar$date)))*365.25/7)
-allreg<-regul(as.numeric(phytopknar$date-phytopknar$date[1]),as.matrix(phytopknar[,4:166]),methods="spline",deltat=7,n=nbpt)
-which(grepl("Leptocylindrus minimus",names(phytopknar)))
-k<-which(grepl("Cryptomonads",names(phytopknar)))
-k<-which(grepl("Thalassiosira nordenskioeldii",names(phytopknar)))
-plot(as.numeric(phytopknar$date-phytopknar$date[1]),as.data.frame(phytopknar)[,k],type="b")
-title(names(phytopknar)[k])
-lines(allreg$x,allreg$y[,k-3],col="red")
-points(allreg$x,allreg$y[,k-3],col="green")
-
-
-rez0<-tsfeatures(ts(na.omit(allreg$y)),features=c(entropy,lumpiness,stability,crossing_points,hurst,stl_features,acf_features,pacf_features,nonlinearity,heterogeneity,firstmin_ac,firstzero_ac))
-rez0<-data.frame(rez0)[,1:27]
-
-library(ade4)
-rezpca<-dudi.pca(data.frame(rez0),nf=6,scannf=FALSE)
-s.class(rezpca$li,fac=as.factor(names(allreg$y)))
-s.arrow(data.frame(rezpca$c1))#, lab = names(deug$tab), plot = FALSE)
-
-
-# Bibliography

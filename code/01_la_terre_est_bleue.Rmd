@@ -1,0 +1,114 @@
+---
+title: "Océan et climat : séance 1 'La terre est bleue'"
+author: "Julie Faucher & Laurent Dubroca"
+date: "`r date()`"
+bibliography: '/home/moi/datahome/work/biblio/enfin/biblioloran.bib'
+---
+
+
+```{r global_options, include=T,cache=F,echo=F,warning=F,message=F,progress=F,verbose=F,results="hide"}
+#knitr option
+operationnel<-TRUE
+knitr::opts_chunk$set(echo=FALSE, 
+		      warning=!operationnel, 
+		      message=!operationnel,
+		      fig.height=8,
+		      progress=!operationnel,
+		      verbose=!operationnel,
+		      include=TRUE,dev='png',autodep=FALSE)
+#package
+library(COSTcore);library(COSTdbe);library(COSTeda)
+library(dplyr);library(tidyr);library(stringr)
+library(ggplot2);library(gridExtra)
+library(sf)
+##library(openxlsx);library(mailR)
+library(pander);library(captioner)
+library(mapdata)
+library(DATRAS)
+library(sparkTable)
+library(cardidates)
+library(lubridate)
+library(ggmap)
+library(osmdata)
+library(ggspatial)
+#local fct
+#source("credo_fct.R")
+#initialise les fonctions pour légender tables et figures
+tabcap <- captioner(prefix = "Table")
+figcap <- captioner(prefix = "Figure")
+
+#`r tabcap(name="info",caption="Stock id: area, species, catches.")`
+#```{r,cache=T,eval=!param[1,2],echo=FALSE,results="asis"}
+#cat("Empty section with no plot means no data.")
+#```
+#```{r tsplot1caption,cache=T,eval=tabtest[1,2],echo=FALSE,results="asis"}
+#cat(figcap(name="tsarea",caption="Landings by ICES divsion."))
+#```
+#param
+zone <- c(left = -2, bottom = 49, right = 2, top = 51)
+
+```
+
+**DRAFT/FRENCH/PRIMARY SCHOOL/SECOND GRADE**
+
+# Objectifs 
+
+Objectifs :
+
+- la Terre est une planète recouverte de mers et d'océans
+- la part des terres émergées est de 30%
+- quelles sont les mers et les océans proches de la classe (TO DO)
+
+A partir de la carte représentant la surface du globe où deux couleurs
+distinguent les continents (gris dans le document) des mers (bleu ici), il s'agit d'observer que:
+
+- la couleur bleue occupe une surface plus importante que la couleur grise
+- de quantifier les 30 % en découpage et pesée des surfaces (une balance est
+  nécessaire) ou de ranger les surfaces grises et bleues séparemment
+  (anomorphose à réaliser dans le document TO DO).
+  
+
+Déroulement :
+
+- présentation du document (légende, échelle)
+- observation
+- questions guidées :
+  - où sommes-nous sur cette carte (continent, pays) ?
+  - que peut-on dire du bleue par rapport au gris ?
+
+# Document
+
+## Carte
+
+```{r worldmap0,echo=T}
+#prepare the world
+library("rnaturalearth")
+library("rnaturalearthdata")
+library(ggplot2)
+library(sf)
+library(maps)
+world <- ne_countries(scale = "medium", returnclass = "sf")
+legendeworld<-data.frame(x=c(1,1,1,1),y=c(1.5,2,2.25,2.5),nom=c("Légende :","Terre","","Océan"))#,color=c("light grey","lightblue"))
+aa<-ggplot()+geom_tile(data=legendeworld,aes(x=y,y=x,fill=nom),color="white")+
+	scale_fill_manual(values=rev(c("lightgrey","lightblue","white","white")))+
+	geom_text(data=legendeworld,aes(x=y,y=x,label=nom),size=3)+
+	theme_void()+
+	theme(legend.position="none")#+
+	#coord_fixed()
+#print(aa)
+
+
+lemonde<-ggplot(data=world)+
+geom_sf(data=world,colour="dark grey",fill="dark grey",show.legend=TRUE)+
+coord_sf(expand=F)+theme_bw()+
+ theme(panel.grid.major = element_line(colour = 'transparent'),
+       panel.background = element_rect(fill = "lightblue", colour = "lightblue"))+
+ ggtitle("Le monde")
+#print(lemonde)
+
+p1<-ggdraw()+
+	draw_plot(lemonde,0,0,1,1)+
+	draw_plot(aa,0.35,0.21,0.38,0.06)
+print(p1)
+```
+
