@@ -37,7 +37,7 @@ drafts disponibles sont :
 
   - [Séquence 01: la terre est bleue](/code/01_la_terre_est_bleue.pdf)
   - [Séquence 02: les activités en
-    mer](/code/01_les_activités_en_mer.html)
+    mer](/code/02_les_activités_en_mer.html)
 
 ## Installation
 
