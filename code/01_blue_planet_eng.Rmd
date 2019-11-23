@@ -3,9 +3,9 @@ title: 'Ocean and climate : session ''blue planet'''
 author: "Julie Faucher, Laurent Dubroca, Colin Dubroca, Théodore Dubroca, Claudia Schlagenhauf"
 date: "`r format(Sys.time(), '%d/%m/%Y')`"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
   word_document: default
 bibliography: /home/moi/datahome/work/biblio/enfin/biblioloran.bib
 ---
@@ -65,7 +65,8 @@ zone <- c(left = -2, bottom = 49, right = 2, top = 51)
 
 ## Process
 
-# First phase
+### First phase
+
 - Collect your student’s knowledge on the ocean: What is the ocean? What do you find there? What is its role for our planet, humankind and all living species?
 - Project the map and distribute the student worksheet.
 Explain that it represents the planet earth. Explain what the colours mean: continents (in grey colour) and oceans (in blue colour).
@@ -79,13 +80,14 @@ Make them aware that:
 - Cut out the continents and the oceans, put the blue bits together and also the grey ones, compare the result and observe that the aggregated surfaces are different in size. 
 - Cut out the continents and the oceans and weigh each category with letter scales. Observe that their mass is different.
 
-# Second phase
-Lesson proposed by Lamap : https://www.fondation-lamap.org/node/28655 (in french).
-https://www.fondation-lamap.org/en/page/33352/ocean-session-i1-water-reservoirs.
+### Second phase
+
+Lesson proposed by Lamap : https://www.fondation-lamap.org/en/page/33352/ocean-session-i1-water-reservoirs.
 
 # Document
 
 Print the white map and distribute it to the students.
+
 ## World map
 
 ```{r worldmap0,echo=F}
