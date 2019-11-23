@@ -1,0 +1,63 @@
+---
+title: "Température"
+author: "Julie Faucher"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## La température
+
+- résumé : voir l'évolution de la température des océans dans le temps, mesurée par satellite.
+- compétences : pratiquer des démarches scientifiques
+- durée : 45 min
+- lexique : température, satellite`
+- expérience : oui
+- matériel : bocal, thermomètre infra-rouge
+- objectif : comprendre la mesure de la température des océans par satellite. Prendre conscience de l'évolution de la température des océans dans le temps et dans l'espace.
+
+## Déroulement
+
+- expérience : mesurer la température d'un bocal d'eau chaude et d'un bocal d'eau froide avec un thermomètre infra-rouge.
+-> On comprend ainsi comment le satellite mesure la température de l'eau. 
+- observation des cartes de notre zone d'intérêt. (3 cartes disponibles : année en cours, il y a 10 ans et 20 ans)
+- observation du graphique de notre zone d'intérêt
+- conclure : "nous observons un changement de la température dans notre zone étudiée"
+
+(NEW PAGE : fiche élève à imprimer )
+## Etude de la température des Océans par satellite
+
+Les satellites mesurent en continue la température des océans. Nous avons reproduit ce qu'ils font.
+# expérience :
+consigne : noter la température mesurée sous chaque bocal
+
+      INSERER IMAGE EXP
+ 
+# cartes des températures
+
+      INSERER CARTE SAT.
+      
+# conclusion : 
+
+      Mettre des lignes
+
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
