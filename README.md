@@ -37,7 +37,9 @@ séquences suivantes sont à l’état de brouillon (pour visionner les
 séquences au format html, il faut les télécharger sur son poste pour le
 moment) :
 
-  - [Séquence 01: la terre est bleue](/code/01_la_terre_est_bleue.pdf)
+  - Séquence 01: [la terre est
+    bleue](/code/01_la_terre_est_bleue_fr.pdf) / [Blue
+    planet](/code/01_blue_planet_eng.pdf)
   - [Séquence 02: les activités en
     mer](/code/02_les_activités_en_mer.pdf)
   - [Séquence 03: la température de
@@ -57,8 +59,3 @@ En cours…
 ## Example
 
 This is a basic example which shows you how to generate a document:
-
-``` r
-# library(oeClim)
-## basic example code
-```
