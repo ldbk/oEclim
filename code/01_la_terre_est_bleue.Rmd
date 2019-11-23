@@ -1,8 +1,11 @@
 ---
-title: "Océan et climat : séance 1 'La terre est bleue'"
-author: "Julie Faucher & Laurent Dubroca"
+title: 'Océan et climat : séance 1 ''La terre est bleue'''
+author: "Julie Faucher, Laurent Dubroca, Colin Dubroca, Théodore Dubroca"
 date: "`r date()`"
-bibliography: '/home/moi/datahome/work/biblio/enfin/biblioloran.bib'
+output:
+  pdf_document: default
+  word_document: default
+bibliography: /home/moi/datahome/work/biblio/enfin/biblioloran.bib
 ---
 
 
@@ -17,7 +20,6 @@ knitr::opts_chunk$set(echo=FALSE,
 		      verbose=!operationnel,
 		      include=TRUE,dev='png',autodep=FALSE)
 #package
-library(COSTcore);library(COSTdbe);library(COSTeda)
 library(dplyr);library(tidyr);library(stringr)
 library(ggplot2);library(gridExtra)
 library(sf)
@@ -56,16 +58,17 @@ zone <- c(left = -2, bottom = 49, right = 2, top = 51)
 Objectifs :
 
 - la Terre est une planète recouverte de mers et d'océans
-- la part des terres émergées est de 30%
-- quelles sont les mers et les océans proches de la classe (TO DO)
+- la part des terres émergées est de 30% donc la Terre est récouverte par 70% de mers et d'océans
 
-A partir de la carte représentant la surface du globe où deux couleurs
-distinguent les continents (gris dans le document) des mers (bleu ici), il s'agit d'observer que:
 
-- la couleur bleue occupe une surface plus importante que la couleur grise
-- de quantifier les 30 % en découpage et pesée des surfaces (une balance est
-  nécessaire) ou de ranger les surfaces grises et bleues séparemment
-  (anomorphose à réaliser dans le document TO DO).
+Séances : 
+
+L'enseignant présente la carte en expliquant qu'il s'agit de la terre. Il propose aux élèves de localiser où ils se situent sur la carte. 
+Il faut expliquer que les deux couleurs
+distinguent les continents (en gris dans le document) des mers (en bleu ici). Il faut observer que :
+
+- la couleur bleue occupe une surface plus importante que la couleur grise. Pour cela on peut proposer un coloriage des surfaces et voir que le temps de coloriage des océans est plus long que celui des continents.
+On peut aussi découper les continents et les océans puis les assembler séparemment et constater que les surfaces diffèrent. On peut peser les deux ensembles avec une balance à courrier et faire le même constat.
   
 
 Déroulement :
@@ -78,15 +81,18 @@ Déroulement :
 
 # Document
 
+La carte est à imprimer et distribuer aux élèves.
+
 ## Carte
 
-```{r worldmap0,echo=T}
+```{r worldmap0,echo=F}
 #prepare the world
 library("rnaturalearth")
 library("rnaturalearthdata")
 library(ggplot2)
 library(sf)
 library(maps)
+library(cowplot)
 world <- ne_countries(scale = "medium", returnclass = "sf")
 legendeworld<-data.frame(x=c(1,1,1,1),y=c(1.5,2,2.25,2.5),nom=c("Légende :","Terre","","Océan"))#,color=c("light grey","lightblue"))
 aa<-ggplot()+geom_tile(data=legendeworld,aes(x=y,y=x,fill=nom),color="white")+

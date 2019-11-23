@@ -38,3 +38,4 @@ rsconnect/
 #vi swp file
 
 *.swp
+.Rproj.user
