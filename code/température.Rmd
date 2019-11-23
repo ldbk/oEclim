@@ -1,18 +1,21 @@
 ---
-title: "Température"
-author: "Julie Faucher"
-output: html_document
+title: "Température des océans mesurée par les satellites"
+author: "Julie Faucher, Laurent Dubroca"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<<<<<<< HEAD
+
 ## La température
 
 - résumé : voir l'évolution de la température des océans dans le temps, mesurée par satellite.
-- compétences : pratiquer des démarches scientifiques
+- compétences : pratiquer une démarche scientifique, réaliser une expérience, s'approprier des outils, se situer dans l'espace et dans le temps
 - durée : 45 min
 - lexique : température, satellite`
 - expérience : oui
@@ -22,43 +25,48 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Déroulement
 
 - expérience : mesurer la température d'un bocal d'eau chaude et d'un bocal d'eau froide avec un thermomètre infra-rouge.
--> On comprend ainsi comment le satellite mesure la température de l'eau. 
-- observation des cartes de notre zone d'intérêt. (3 cartes disponibles : année en cours, il y a 10 ans et 20 ans)
-- observation du graphique de notre zone d'intérêt
-- conclure : "nous observons un changement de la température dans notre zone étudiée"
+  - le thermomètre infrarouge permet de mesurer la température de l'eau à distance. On comprend ainsi comment le satellite mesure la température de l'eau des océans depuis l'espace.
+- observation des cartes de la zone d'intérêt. 3 cartes sont disponibles : celle de l'année en cours, il y a 10 ans et il y a 20 ans.
+- observation du graphique de la zone d'intérêt
+- conclure : "nous observons (ou non) un changement de la température dans notre zone étudiée"
 
-(NEW PAGE : fiche élève à imprimer )
-## Etude de la température des Océans par satellite
 
-Les satellites mesurent en continue la température des océans. Nous avons reproduit ce qu'ils font.
-# expérience :
+## Documents supports
+
+Les pages qui suivent sont à imprimer et distribuer aux élèves.
+
+\newpage
+
+# Etude de la température des Océans par satellite
+
+Les satellites mesurent en continu la température des océans. Nous avons reproduit ce qu'ils font.
+
+
+
+## Expérience :
+
 consigne : noter la température mesurée sous chaque bocal
 
       INSERER IMAGE EXP
- 
-# cartes des températures
+
+
+## Satellite
+
+Voici le satellite appelé MODIS qui mesure la température des océans depuis l'espace.
+
+![Photographie du satellite MODIS](../pictures/Aqua_spacecraft_model.png)
+
+
+## Cartes des températures de la mer de notre zone étudiée : ______________________
+
+
 
       INSERER CARTE SAT.
       
-# conclusion : 
+## Graphique de l'évolution de la température dans le temps  
+      
+      
+      
+## Conclusion : 
 
       Mettre des lignes
-
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

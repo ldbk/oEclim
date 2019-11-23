@@ -1,0 +1,139 @@
+---
+title: 'Ocean and climate : session ''blue planet'''
+author: "Julie Faucher, Laurent Dubroca, Colin Dubroca, Théodore Dubroca, Claudia Schlagenhauf"
+date: "`r format(Sys.time(), '%d/%m/%Y')`"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  word_document: default
+bibliography: /home/moi/datahome/work/biblio/enfin/biblioloran.bib
+---
+
+
+```{r global_options, include=T,cache=F,echo=F,warning=F,message=F,progress=F,verbose=F,results="hide"}
+#knitr option
+operationnel<-TRUE
+knitr::opts_chunk$set(echo=FALSE, 
+		      warning=!operationnel, 
+		      message=!operationnel,
+		      fig.height=8,
+		      progress=!operationnel,
+		      verbose=!operationnel,
+		      include=TRUE,dev='png',autodep=FALSE)
+#package
+library(dplyr);library(tidyr);library(stringr)
+library(ggplot2);library(gridExtra)
+library(sf)
+##library(openxlsx);library(mailR)
+library(pander);library(captioner)
+library(mapdata)
+library(sparkTable)
+library(cardidates)
+library(lubridate)
+library(ggmap)
+library(osmdata)
+library(ggspatial)
+#local fct
+#source("credo_fct.R")
+#initialise les fonctions pour légender tables et figures
+tabcap <- captioner(prefix = "Table")
+figcap <- captioner(prefix = "Figure")
+
+#`r tabcap(name="info",caption="Stock id: area, species, catches.")`
+#```{r,cache=T,eval=!param[1,2],echo=FALSE,results="asis"}
+#cat("Empty section with no plot means no data.")
+#```
+#```{r tsplot1caption,cache=T,eval=tabtest[1,2],echo=FALSE,results="asis"}
+#cat(figcap(name="tsarea",caption="Landings by ICES divsion."))
+#```
+#param
+zone <- c(left = -2, bottom = 49, right = 2, top = 51)
+
+```
+
+## Our planet is blue
+
+- Summary: Identify the blue parts of our planet’s surface and identify the parts of the water reserve which are salty.
+- Knowledge: 
+- Our Earth is a planet covered with oceans and seas. Only 29% of its surface is above the water level and 71% is blue. 
+- 97% of our planet’s water reserve is oceans and seas (salty water)
+- Purpose of the lesson: Because of its permanent exchanges with the atmosphere, the ocean is a major factor for our climate. When the atmosphere heats up, it is the ocean which absorbs the biggest part of the energy received. By measuring the ocean’s heat content, we can quantify and monitor the extent of the global warming. This lesson is also suitable for studying the distribution of the global water reserves between oceans, rivers and the atmosphere. 
+- Time: 30 minutes
+- Equipment: two maps per student (A4)
+- Experiments: yes
+
+## Process
+
+# First phase
+- Collect your student’s knowledge on the ocean: What is the ocean? What do you find there? What is its role for our planet, humankind and all living species?
+- Project the map and distribute the student worksheet.
+Explain that it represents the planet earth. Explain what the colours mean: continents (in grey colour) and oceans (in blue colour).
+- Ask the students to localise the area where they are on the map. 
+Make them aware that:
+- blue colour zones occupy more space than grey colour zones.
+
+*Proposed activities:*
+
+- Ask the children to colour the zones while measuring the time they need for it. Make them aware that colouring the oceans needs longer than colouring the continents. (on a white map)
+- Cut out the continents and the oceans, put the blue bits together and also the grey ones, compare the result and observe that the aggregated surfaces are different in size. 
+- Cut out the continents and the oceans and weigh each category with letter scales. Observe that their mass is different.
+
+# Second phase
+Lesson proposed by Lamap : https://www.fondation-lamap.org/node/28655 (in french).
+https://www.fondation-lamap.org/en/page/33352/ocean-session-i1-water-reservoirs.
+
+# Document
+
+Print the white map and distribute it to the students.
+## World map
+
+```{r worldmap0,echo=F}
+#prepare the world
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(ggplot2)
+library(sf)
+library(maps)
+library(cowplot)
+world <- ne_countries(scale = "small", returnclass = "sf")
+#projection
+world2<-st_transform(world,"+proj=moll")
+
+library(rnaturalearth)
+# Background
+graticule <- st_graticule(ndiscr = 10000, margin = 10e-6) %>%
+  st_transform(crs = "+proj=moll")
+sphere <- graticule %>%
+  st_convex_hull() %>%
+  summarise(geometry = st_union(geometry))
+lemonde<-ggplot() + 
+  geom_sf(data=sphere, fill = 'aliceblue',color="aliceblue") + # the globe "horizon" - you can ignore
+  geom_sf(data=world2,fill="light grey",color="light grey")+#
+ # the visible continents
+  #coord_sf(crs = "moll") +
+  theme(
+    panel.grid.major = element_line(color = "light blue", size = 1),
+    panel.ontop = F,
+    panel.background = element_rect(fill = NA)
+  )
+print(lemonde)
+```
+
+## Colouring world map
+
+```{r worldmapempty,echo=F}
+lemonde<-ggplot() + 
+  geom_sf(data=sphere, fill = 'white',color="white") + # the globe "horizon" - you can ignore
+  geom_sf(data=world2,fill="white",color="black")+#
+ # the visible continents
+  #coord_sf(crs = "moll") +
+  theme(
+    panel.grid.major = element_line(color = "light blue", size = 1),
+    panel.ontop = F,
+    panel.background = element_rect(fill = NA)
+  )
+print(lemonde)
+
+```
+
