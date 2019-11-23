@@ -1,186 +1,34 @@
 ---
-title: "Réchauffement cycle 2 : document de test"
-author: "Julie Faucher & Laurent Dubroca"
-date: "`r date()`"
-bibliography: '/home/moi/datahome/work/biblio/enfin/biblioloran.bib'
+title: "Untitled"
+author: "Julie Faucher"
+output:
+  html_document:
+    df_print: paged
 ---
 
-
-```{r global_options, include=T,cache=F,echo=F,warning=F,message=F,progress=F,verbose=F,results="hide"}
-#knitr option
-operationnel<-TRUE
-knitr::opts_chunk$set(echo=FALSE, 
-		      warning=!operationnel, 
-		      message=!operationnel,
-		      fig.height=8,
-		      progress=!operationnel,
-		      verbose=!operationnel,
-		      include=TRUE,dev='png',autodep=FALSE)
-#package
-library(COSTcore);library(COSTdbe);library(COSTeda)
-library(dplyr);library(tidyr);library(stringr)
-library(ggplot2);library(gridExtra)
-library(sf)
-##library(openxlsx);library(mailR)
-library(pander);library(captioner)
-library(mapdata)
-library(DATRAS)
-library(sparkTable)
-library(cardidates)
-library(lubridate)
-library(ggmap)
-library(osmdata)
-library(ggspatial)
-#local fct
-#source("credo_fct.R")
-#initialise les fonctions pour légender tables et figures
-tabcap <- captioner(prefix = "Table")
-figcap <- captioner(prefix = "Figure")
-
-#`r tabcap(name="info",caption="Stock id: area, species, catches.")`
-#```{r,cache=T,eval=!param[1,2],echo=FALSE,results="asis"}
-#cat("Empty section with no plot means no data.")
-#```
-#```{r tsplot1caption,cache=T,eval=tabtest[1,2],echo=FALSE,results="asis"}
-#cat(figcap(name="tsarea",caption="Landings by ICES divsion."))
-#```
-#param
-zone <- c(left = -2, bottom = 49, right = 2, top = 51)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+setwd("~/Documents/Talinn/oeClim/oeClim/code")
 
 ```
 
+## R Markdown
 
-# Introduction 
+Je teste le document.
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-Un test: document généré partiellement ne automatique 
-Utilisation des données 
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-#sst 1982-2014 0.04
-serviceid<-"SST_NWS_SST_L4_REP_OBSERVATIONS_010_023-TDS"
-productid<-"IFREMER-NWS-SST-L4-REP-OBS_FULL_TIME_SERIE"
-gégraphie de la Manche
-
-# La mer : d'une surface plane à une milieu anthropisé
-
-## Séance
-
-carte orienté terre versus human activity from Emodnet + données de traffic
-maritime (toujours emodnet)
-
-## La terre ou la mer ?
-
-Mettre en évidence que les terres émergées occupent 30 % de la surface de la
-terre.
-
-## Activité
-
-Géographie...
-
-## Une surface plane ?
-
-```{r basemap}
-#plot a country
-
-#find the bbox of a country
-bboxcountry<-osmdata::getbb("France")
-zonecountry<-osmdata::getbb("France")
-
-zone <- c(left = -1.5, bottom = 49.2, right = 0.5, top = 49.8)
-zoneworld<-c(-180,-80,180,85)
-fondworld<-get_stamenmap(zoneworld,maptype="terrain-background",zoom=1)
-pipo<-data.frame(x=0,y=50)
-ggmap(fondworld)+xlab("Longitude")+ylab("Latitude")
-annotation_scale(location = "bl", width_hint = 0.5) 
-	    annotation_north_arrow(location = "bl", which_north = "true", 
-				           pad_x = unit(0.75, "in"), pad_y =
-						   unit(0.5, "in"),
-					           style =
-							   north_arrow_fancy_orienteering)
-+
-
-#zone <- c(left = -1, bottom = 49.3, right = -0.5, top = 49.4)
-if(!file.exists("fond.rdata")){
-	fond<-get_stamenmap(zone,maptype="terrain-background",zoom=9)
-	fond<-get_stamenmap(zone,maptype="toner",zoom=9)
-	fond<-get_stamenmap(zone,maptype=c("terrain-lines"),zoom=9,messaging=FALSE,color="color",force=T)
-	print(ggmap(fond))
-
-	save(fond,file="fond.rdata")
-}else{
-	load("fond.rdata")
-}
-print(ggmap(fond))
-#ggmap(fond)+geom_point(data=data.frame(x=0,y=50),aes(x=x,y=y))
-library(REMODnet)
-ha<-gethumactpointall(-2,2,49,51)
-plot(ha$x,ha$y)
-ggmap(fond)+geom_point(data=ha,aes(x=x,y=y,color=type))
-#add ais from edmonet
-path2data<-"../../../../satellite_data/"
-testfich<-paste0("ais/2017_02_st_all.tif")
-
-
-
-
+```{r cars}
+summary(cars)
 ```
 
-Mettre en évidence le vide des cartes routières.
-Puis mettre en avant les noms 
-Puis les activités
+## Including Plots
 
-## Traffic maritime
+You can also embed plots, for example:
 
-perception
-
-# un milieu dynamique
-
-## La température
-
-thermomètre à distance : usage d'un satellite pour voir les choses
-utilisation d'un thermomètre infrarouge
-
-```{r data,eval=F}
-#use local data
-path2data<-"../../../../satellite_data/chloa/"
-fichsst<-dir(path=path2data,pattern="ana",full=T)
-library(raster)
-pipo<-stack(fichsst[1],varname="analysed_sst")
-plot(pipo)
-
-#test python stuff
-library(reticulate)
-os<-import("os")
-os$listdir(".")
-pytest<-c("def add(x,y): 
-	  return x+y")
-writeLines(pytest,file("pipo.py"))
-py_run_string(pytest)
-source_python("pipo.py")
-add(5,15)
-
-import("cdsapi")
-pipopy<-c("import cdsapi
-c = cdsapi.Client()
-c.retrieve(
-'satellite-sst-esa-cci',
-{
-'variable':'all',
-'format':'zip',
-'day':'14',
-'month':'02',
-'year':'2004'
-},
-'download.zip')
-")
-writeLines(pipopy,file("pipo.py"))
-source_python("pipo.py")
-
-
-
-
-#Copernicus
-#download some temperature data
-
-#Emodnet
+```{r pressure, echo=FALSE}
+plot(pressure)
 ```
 
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
