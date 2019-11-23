@@ -8,6 +8,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<<<<<<< HEAD
 ## La température
 
 - résumé : voir l'évolution de la température des océans dans le temps, mesurée par satellite.
