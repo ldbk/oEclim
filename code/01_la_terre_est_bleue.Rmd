@@ -51,33 +51,27 @@ zone <- c(left = -2, bottom = 49, right = 2, top = 51)
 
 ```
 
-**DRAFT/FRENCH/PRIMARY SCHOOL/SECOND GRADE**
+## La Terre est bleue 
 
-# Objectifs 
-
-Objectifs :
-
-- la Terre est une planète recouverte de mers et d'océans
-- la part des terres émergées est de 30% donc la Terre est récouverte par 70% de mers et d'océans
+- résumé : identifier la part de l'eau sur la planète
+- notions : la Terre est une planète recouverte de mers et d'océans. La part des terres émergées est de 30% donc la Terre est récouverte par 70% de mers et d'océans. 
+- intérêt de la séance : Par ses échanges permanents avec l’atmosphère, l’océan joue un rôle déterminant pour le climat. Quand la planète se réchauffe, c’est l’océan qui stocke la majeure partie de l’énergie reçue. En mesurant la quantité de chaleur stockée par l’océan, il est possible de quantifier et de suivre l’ampleur du réchauffement climatique.
 
 
-Séances : 
+## Déroulement
 
-L'enseignant présente la carte en expliquant qu'il s'agit de la terre. Il propose aux élèves de localiser où ils se situent sur la carte. 
-Il faut expliquer que les deux couleurs
-distinguent les continents (en gris dans le document) des mers (en bleu ici). Il faut observer que :
+- Recueillir les connaissances des élèves sur le thème de l'océan : qu'est-ce que l'océan ? qu'est-ce qu'on y trouve ? quel est son rôle pour la planète, l'homme, les êtres vivants ?
+- Projeter la carte ou distribuer la fiche élève.
+Préciser qu'il s'agit de la terre. Expliquer que les deux couleurs distinguent les continents (en gris) des mers (en bleu).
+- Proposer aux élèves de localiser où ils se situent sur la carte. 
+Il faut observer que :
+- la couleur bleue occupe une surface plus importante que la couleur grise.
 
-- la couleur bleue occupe une surface plus importante que la couleur grise. Pour cela on peut proposer un coloriage des surfaces et voir que le temps de coloriage des océans est plus long que celui des continents.
-On peut aussi découper les continents et les océans puis les assembler séparemment et constater que les surfaces diffèrent. On peut peser les deux ensembles avec une balance à courrier et faire le même constat.
+# Proposition d'activités :
+- proposer le coloriage des surfaces et voir que le temps de coloriage des océans est plus long que celui des continents. (sur un fond de carte vierge ?)
+- découper les continents et les océans puis les assembler séparemment et constater que les surfaces diffèrent. 
+- Découper les continents et les océans et peser les deux ensembles avec une balance à courrier. Constater que la masse différe.
   
-
-Déroulement :
-
-- présentation du document (légende, échelle)
-- observation
-- questions guidées :
-  - où sommes-nous sur cette carte (continent, pays) ?
-  - que peut-on dire du bleue par rapport au gris ?
 
 # Document
 
