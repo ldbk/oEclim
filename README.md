@@ -45,6 +45,9 @@ moment) :
   - Séquence 03: [la température de
     l’eau](/code/03_la_température_de_la_mer_fr.pdf) / [Sea surface
     temperature](/code/03_sea_surface_temperature_eng.pdf)
+  - Séquence 04: [la couleur de
+    l’eau](/code/04_la_couleur_de_l_eau_fr.pdf) / [Ocean
+    color](/code/04_ocean_color_eng.pdf)
   - …
 
 ## Installation
