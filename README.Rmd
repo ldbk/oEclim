@@ -9,6 +9,7 @@ system("rm README.html")
 if(F){
 	library(usethis)
 }
+
 ```
 
 ```{r, include = FALSE}
@@ -19,6 +20,7 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+
 ## oeClim 
 
 <!-- badges: start -->

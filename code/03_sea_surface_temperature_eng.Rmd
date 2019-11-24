@@ -2,8 +2,10 @@
 title: "Sea surface temperature measured by satellite"
 author: "Julie Faucher, Laurent Dubroca, Claudia Schlagenhauf"
 output:
-  pdf_document: default
-  html_document: default
+  html_document:
+    dev: png
+  pdf_document:
+    dev: png
   word_document: default
 params:
   xmin: -1.5
@@ -58,7 +60,7 @@ knitr::include_graphics("../pictures/wasserglaser.png")
 
 Here is the satellite called MODIS that measures ocean temperature from space.
 
-```{r, echo = FALSE, out.width="100%",fig.align="center",out.width = "150%"}
+```{r, echo = FALSE, out.width="100%",fig.align="center",out.width = "150%",dpi=10}
 knitr::include_graphics("../pictures/Aqua_spacecraft_model.png")
 ```
 
