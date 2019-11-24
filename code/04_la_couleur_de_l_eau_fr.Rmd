@@ -1,0 +1,133 @@
+---
+title: "La couleur de l'eau"
+output:
+  html_document: default
+  pdf_document: default
+params:
+  xmax: 0.5
+  xmin: -1.5
+  ymax: 49.8
+  ymin: 49.17
+autho: Julie Faucher, Laurent Dubroca
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+- résumé : comprendre ce qu'est le phytoplancton et son suivi dans les océans à l'aide de la couleur de l'eau
+- notions : 
+  - la chlorophylle est le principal pigment assimilateur des végétaux photosynthétiques. Elle permet la phtosynthèse : la synthèse de matière organique en utilisant l'énergie lumineuse. Ce pigment est responsable de la couleur verte des végétaux terrestres et marins. Ces organismes correspondent en général au premier maillon des chaînes alimentaires terrestres et marines. Il s'agira de faire le parallèle entre les 2 milieux. 
+  - dans le milieu marin, la chlorophylle est présente dans le phytoplancton ou plancton végétal. Pour simplifier nous parlerons de plancton. Le plancton regroupe l'ensemble des organismes végétaux vivant en suspension dans l'eau. Ces organismes sont trop petits pour être visible à l'oeil nu. Lorsque ils se retrouvent en grande quantité dans le milieu marin, ils deviennent visible à la surface sous la forme d'étendues colorées. Les satellites mesurent ces étendues colorées de dominante verte.
+  - le plancton subit le transport par les courants des océnas
+  - si la quantité de chlorophylle évolue dans les océans, cela induira des changements dans le milieu marin. 
+  - sous l'effet du réchauffement climatique, de nombreuses espèces planctoniques adaptées aux eaux tempérées migrent vers les eaux de moins en moins froides du nord, entraînant avec elles leurs prédateurs, ce qui modifie l'équilibre des écosystèmes. De plus,  l'accumulation de CO2 dans l'océan provoque une acidification des océans, qui induira des déséquilibres dans la répartition des organismes. Ceux qui supportent cette acidification se développeront plus, d'autres plus sensibles à l'acidité disparaitront.
+- durée : 30 minutes
+- expérience : oui
+
+## Déroulement
+
+- demander les conditions de croissance d'un végétal. En général, les élèves ont déjà étudié la croissance d'un végétal et ont observé qu'il faut de la lumière et que la couleur dominante des végétaux chlorophylliens est le vert. Lorsqu'ils ont listé les besoins, faire le parallèle avec le milieu marin. Le phytoplancton (organisme végétal marin) se développe et croit grâce à la lumière. Il sera absorbé par d'autres organismes, eux-mêmes absorbés par d'autres organismes. Le phytoplancton est donc le premier maillon de la chaîne alimentaire dans le milieu marin. 
+- présenter les cartes de l'évolution mensuelle du plancton.
+- on peut observer que la quantité de plancton varie selon les saisons, correspondant aux floraisons terrestres du printemps dans l'hémisphère nord. On parle aussi de floraison phytoplanctonique (ou bloom). Il y a aussi des mois pour lesquels la couleur de l'eau n'est pas mesurée : pendant l'hiver la couverture nuageuse ne permet au satellite de voir la couleur de l'eau.
+
+## Expérience pour montrer comment le plancton se distribue dans la mer
+
+Cette expérience aide à l'interprétation des images de couleur de l'eau et permet de comprendre l'influence du mouvement des masses d'eau sur ces organismes.
+
+- dans un verre d'eau, verser délicatement une goutte d'encre verte et observer la diffusion de l'encre. Cela montre la dispersion du plancton dans l'eau par diffusion.
+- dans un verre d'eau, faire légèrement tourner l'eau en rond pour créer un courant, arrêter et verser délicatement une goutte d'encre verte. Observer le mouvement créé et voir que l'encre crée des tourbillons, suivant le mouvement de l'eau dans le vert. Le plancton êst transporté par les courants océaniques de la même manière.
+
+## Documents supports
+
+Les pages qui suivent sont à imprimer et distribuer aux élèves.
+
+\newpage
+
+
+## Satellite
+
+Voici le satellite appelé MODIS qui mesure la couleur de l'eau depuis l'espace.
+
+```{r, echo = FALSE, out.width="100%",fig.align="center",out.width = "150%",cache=T}
+knitr::include_graphics("../pictures/Aqua_spacecraft_model.png")
+```
+
+## Cartes mensuelles de la couleur de l'eau pour l'année 2018
+
+Nom de la zone étudiée : ______________________
+
+```{r mapchl,include=T,eval=T,echo=F, message=FALSE, warning=FALSE,fig.width=8,fig.align="center",out.width = "140%",cache=T}
+library(rasterVis)
+library(ggplot2)
+#load sst modisA data
+chl18<-stack("../../../datalocal/modis/chl18")
+
+#e <- extent(-15,-14,17,19)
+#e <- extent(-1.5,0.5,49.17,49.8)
+e <- extent(params$xmin,params$xmax,params$ymin,params$ymax)
+
+
+pipo <- crop(chl18, e)
+names(pipo)<-gsub("X","Mois ",names(pipo))
+
+plt1<-gplot(pipo)+geom_raster(aes(fill=value))+
+        #geom_contour(aes(z=value),color="light grey")+
+        facet_wrap(~variable)+
+        #scale_colour_gradient2()+
+        scale_fill_distiller(palette="Spectral",na.value="white",trans="log",name="Couleur de l'eau\n(concentration en\nchlorophylle a\nen mg.m^-3)")+
+        theme_bw()+xlab("")+ylab("")+
+        borders("world",fill="light grey",colour="light grey")+
+        coord_quickmap(xlim=c(e@xmin,e@xmax),ylim=c(e@ymin,e@ymax))
+plot(plt1)
+
+
+```
+
+## Cartes de la couleur de l'eau moyenne annuelle de 2002 à 2018
+
+```{r mapchl2,include=T,eval=T,echo=F, message=FALSE, warning=FALSE,fig.width=6,fig.align="center",out.width = "140%",cache=T}
+library(rasterVis)
+library(ggplot2)
+#load sst modisA data
+chl<-stack("../../../datalocal/modis/chl")
+e <- extent(params$xmin,params$xmax,params$ymin,params$ymax)
+pipo <- crop(chl, e)
+names(pipo)<-gsub("X","Année ",names(pipo))
+
+plt1<-gplot(pipo)+geom_raster(aes(fill=value))+
+        geom_contour(aes(z=value),color="light grey")+
+        facet_wrap(~variable)+
+        #scale_colour_gradient2()+
+        scale_fill_distiller(palette="Spectral",na.value="white",trans="log",name="Couleur de l'eau\n(concentration en\nchlorophylle a\nen mg.m^-3)")+
+      theme_bw()+xlab("")+ylab("")+
+        borders("world",fill="light grey",colour="light grey")+
+        coord_quickmap(xlim=c(e@xmin,e@xmax),ylim=c(e@ymin,e@ymax))
+plot(plt1)
+```
+
+     
+## Graphique de l'évolution de la concentration en chlorophylle a dans le temps
+
+```{r tssst,include=T,eval=T,echo=F, message=FALSE, warning=FALSE,fig.align="center",cache=T}
+
+tspipo<-cellStats(pipo,mean)
+tssd<-cellStats(pipo,sd)
+
+tspipo<-data.frame(year=as.numeric(substr(names(tspipo),7,10)),sst=tspipo,sd=tssd)
+
+
+plt<-ggplot(tspipo,aes(x=year,y=sst))+geom_line()+theme_bw()+
+  xlab("Année")+ylab("Couleur de l'eau\n(concentration en chlorophylle a en mg.m^-3)")
+print(plt)
+
+```
+
+      
+## Conclusion
+
+Décris les évolutions de la couleur de l'eau que tu vois sur les cartes et sur le graphique :
+
+```{r carreaux,include=T,eval=T,echo=F, message=FALSE, warning=FALSE,fig.align="center",out.width = "90%",cache=T}
+knitr::include_graphics("../pictures/carreaux.png")
+```
+
