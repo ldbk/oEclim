@@ -42,8 +42,9 @@ moment) :
     planet](/code/01_blue_planet_eng.pdf)
   - [Séquence 02: les activités en
     mer](/code/02_les_activités_en_mer.pdf)
-  - [Séquence 03: la température de
-    l’eau](/code/03_la_température_de_l_eau.pdf)
+  - Séquence 03: [la température de
+    l’eau](/code/03_la_température_de_la_mer_fr.pdf) / [Sea surface
+    temperature](/code/03_sea_surface_temperature_eng.pdf)
   - …
 
 ## Installation
